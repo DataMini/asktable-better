@@ -21,7 +21,17 @@ async function loadTestReport() {
         sortedModels.forEach(model => {
             if (models[model]) {
                 const { score, timestamp } = models[model];
-                row.push(`<td>${score} (${timestamp})</td>`);
+                const percentage = parseFloat(score.replace('%', '')); // Convert score to a number
+                row.push(`
+                    <td>
+                        <div class="progress" style="height: 20px;">
+                            <div class="progress-bar" role="progressbar" style="width: ${percentage}%" aria-valuenow="${percentage}" aria-valuemin="0" aria-valuemax="100">
+                                ${score}
+                            </div>
+                        </div>
+                        <div class="mt-1 text-muted" style="font-size: 0.85rem;">${timestamp}</div>
+                    </td>
+                `);
             } else {
                 row.push('<td>-</td>');
             }

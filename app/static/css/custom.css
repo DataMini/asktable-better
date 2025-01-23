@@ -9,14 +9,18 @@
 
 /* 覆盖按钮默认颜色 */
 .btn-primary {
-    background-color: var(--primary-color);
-    border-color: var(--primary-color);
+    background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
     color: white;
 }
 
 .btn-primary:hover {
-    background-color: var(--secondary-color);
-    border-color: var(--secondary-color);
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.btn-link {
+    color: var(--secondary-color);
 }
 
 .table-dark {
@@ -29,7 +33,7 @@
 }
 
 a {
-    color: var(--accent-color);
+    color: var(--secondary-color);
     text-decoration: none;
 }
 
@@ -48,4 +52,8 @@ a:hover {
 
 a, .btn {
     transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.progress-bar {
+    background-color: var(--secondary-color);
 }
