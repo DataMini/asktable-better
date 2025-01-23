@@ -2,7 +2,6 @@
 from os.path import join
 import yaml
 import time
-import asyncio
 from app import log, config
 from app.runner.run_story import main as run_story
 from app.runner import init_db
@@ -25,12 +24,6 @@ def run_test(
         works_num=2,
         task_id=None
     ):
-    # # 为当前线程创建事件循环
-    # try:
-    #     loop = asyncio.get_running_loop()
-    # except RuntimeError:
-    #     loop = asyncio.new_event_loop()
-    #     asyncio.set_event_loop(loop)
 
     if task_id:
         log_handler = DatabaseAndWebSocketHandler(task_id)

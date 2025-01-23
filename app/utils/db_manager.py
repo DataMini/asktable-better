@@ -5,7 +5,7 @@ from sqlalchemy.orm import sessionmaker, scoped_session, declarative_base
 from contextlib import contextmanager
 from app import log, config
 
-# 创建数据库引擎
+# Create database engine
 engine = create_engine(
     config.database_url,
     connect_args={"check_same_thread": False} if "sqlite" in config.database_url else {},
@@ -19,15 +19,15 @@ if "sqlite" in config.database_url:
 else:
     log.info(f"Using database mysql: {config.mysql_host}:{config.mysql_port}/{config.mysql_db}")
 
-# 数据库会话管理
+# Database session management
 SessionLocal = scoped_session(sessionmaker(autocommit=False, autoflush=False, bind=engine))
 
-# 声明模型基础类
+# Declare model base class
 Base = declarative_base()
 
 
 def get_db():
-    """获取数据库会话"""
+    """Get database session"""
     db = SessionLocal()
     try:
         yield db
@@ -49,9 +49,9 @@ def SessionManager():
         db.close()
 
 
-# 初始化数据库
+# Initialize database
 def init_db():
-    """初始化数据库（创建表结构）"""
+    """Initialize database (create table structure)"""
     try:
         Base.metadata.create_all(bind=engine)
     except sqlalchemy.exc.OperationalError:

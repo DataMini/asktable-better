@@ -9,22 +9,19 @@ from dotenv import load_dotenv
 
 
 class AppConfig(BaseSettings):
-    # 是否开启 debug 模式
-    debug: bool = Field(default=True)
+    # local storage path
+    atb_data_home_dir: str = Field(default="/at-better")
 
-    # 本地存储路径
-    atb_data_home_dir: str = Field(default="/at-better-web")
-
-    # 故事目录
+    # stories directory
     atb_stories_dir: str = Field(default="/stories")
 
-    # 数据库配置
-    database_type: str = Field(default="sqlite", description="数据库类型，默认为 sqlite")
-    mysql_host: str = Field(default="", description="MySQL 数据库主机地址")
-    mysql_port: int = Field(default=3306, description="MySQL 数据库端口号")
-    mysql_user: str = Field(default="", description="MySQL 数据库用户名")
-    mysql_password: str = Field(default="", description="MySQL 数据库密码")
-    mysql_db: str = Field(default="at_better", description="MySQL 数据库名称")
+    # database config
+    database_type: str = Field(default="sqlite", description="database type, default is sqlite")
+    mysql_host: str = Field(default="", description="MySQL database host address")
+    mysql_port: int = Field(default=3306, description="MySQL database port")
+    mysql_user: str = Field(default="", description="MySQL database username")
+    mysql_password: str = Field(default="", description="MySQL database password")
+    mysql_db: str = Field(default="at_better", description="MySQL database name")
     @cached_property
     def sqlite_path(self):
         sqlite_dir = join(expanduser(self.atb_data_home_dir), "sqlite")
@@ -35,19 +32,19 @@ class AppConfig(BaseSettings):
     # atb_project_dir: str = Field(default_factory=lambda: dirname(dirname(dirname(dirname(abspath(__file__))))))
     @cached_property
     def database_url(self) -> str:
-        """根据配置生成数据库连接 URL"""
+        """generate database connection URL based on config"""
         if self.database_type == "mysql":
             return f"mysql+pymysql://{self.mysql_user}:{self.mysql_password}@{self.mysql_host}:{self.mysql_port}/{self.mysql_db}"
         return f"sqlite:///{self.sqlite_path}"
     
     
-    # 飞书配置
+    # feishu config
     fs_app_id: str = Field(default="")
     fs_app_secret: str = Field(default="")
     fs_wiki_parent_token: str = Field(default="")
     fs_wiki_id: str = Field(default="")
-    fs_file_exchange_folder_token: str = Field(default="")  # 示例：EaSffN1MqlXhxldOoR2cJdmAnjf
-    fs_wiki_url_prefix: str = Field(default="")  # 示例：https://datamini.feishu.cn/wiki/
+    fs_file_exchange_folder_token: str = Field(default="")  # example: EaSffN1MqlXhxldOoR2cJdmAnjf
+    fs_wiki_url_prefix: str = Field(default="")  # example: https://datamini.feishu.cn/wiki/
     
 
     class Config:

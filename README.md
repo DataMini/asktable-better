@@ -14,6 +14,7 @@ services:
       - "8000:8000"
     volumes:
       - ./stories:/stories
+      - ./at-better-data:/at-better
 ```
 
 2. 将测试用例保存到目录 `stories` 中

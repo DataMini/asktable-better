@@ -10,7 +10,7 @@ from lark_oapi.api.wiki.v2 import MoveDocsToWikiSpaceNodeRequest, MoveDocsToWiki
 
 from app import config, log
 
-# 创建client
+# create client
 fs_client = lark_oapi.Client.builder() \
     .app_id(config.fs_app_id) \
     .app_secret(config.fs_app_secret) \
@@ -19,13 +19,13 @@ fs_client = lark_oapi.Client.builder() \
 class SaveToFeishuError(Exception):
     pass
 
-# 上传文件
+# upload file
 def upload_file(file_path: str) -> str:
-    # 从文件路径获取文件名和大小
+    # get file name and size from file path
     file_name = os.path.basename(file_path)
     size = os.path.getsize(file_path)
 
-    # 构造请求对象
+    # build request object
     file = open(file_path, "rb")
     request: UploadAllFileRequest = UploadAllFileRequest.builder() \
         .request_body(UploadAllFileRequestBody.builder()
@@ -37,7 +37,7 @@ def upload_file(file_path: str) -> str:
             .build()) \
         .build()
 
-    # 发起请求
+    # send request
     response = fs_client.drive.v1.file.upload_all(request)
     if not response.success():
         raise SaveToFeishuError(f"upload file failed, code: {response}")
@@ -47,7 +47,7 @@ def upload_file(file_path: str) -> str:
 
 # 将上传的文件导入到云空间
 def create_import_task(file_token: str) -> str:
-    # 构造请求对象
+    # build request object
     request = CreateImportTaskRequest.builder() \
         .request_body(ImportTask.builder()
             .file_extension("md")
@@ -60,10 +60,10 @@ def create_import_task(file_token: str) -> str:
             .build()) \
         .build()
 
-    # 发起请求
+    # send request
     response = fs_client.drive.v1.import_task.create(request)
 
-    # 处理失败返回
+    # handle error response
     if not response.success():
         raise SaveToFeishuError(f"import file failed, code: {response}")
     task_id = response.data.ticket  # 返回任务ID
@@ -71,15 +71,15 @@ def create_import_task(file_token: str) -> str:
 
 
 def _check_import_task(task_id: str) -> str:
-    # 构造请求对象
+    # build request object
     request = GetImportTaskRequest.builder() \
         .ticket(task_id) \
         .build()
 
-    # 发起请求
+    # send request
     response = fs_client.drive.v1.import_task.get(request)
 
-    # 处理失败返回
+    # handle error response
     if not response.success():
         raise SaveToFeishuError(f"get import task failed, code: {response}")
     status = response.data.result.job_status
@@ -107,7 +107,7 @@ def import_file(file_token: str) -> str:
 
 
 def move_file_to_wiki(file_token: str) -> str:
-    # 构造请求对象
+    # build request object
     request = MoveDocsToWikiSpaceNodeRequest.builder() \
         .space_id(config.fs_wiki_id) \
         .request_body(MoveDocsToWikiSpaceNodeRequestBody.builder()
@@ -117,10 +117,10 @@ def move_file_to_wiki(file_token: str) -> str:
             .build()) \
         .build()
 
-    # 发起请求
+    # send request
     response = fs_client.wiki.v2.space_node.move_docs_to_wiki(request)
 
-    # 处理失败返回
+    # handle error response
     if not response.success():
         raise SaveToFeishuError(f"move file to wiki failed, resp: \n{json.dumps(json.loads(response.raw.content), indent=4, ensure_ascii=False)}")
     wiki_token = response.data.wiki_token

@@ -69,8 +69,10 @@ def create_database(access_config, force_recreate_db=False):
             f"-e 'CREATE DATABASE {db_name};' 2>/dev/null"
         )
     try:
+        log.debug(f"Creating database '{db_name}' with command: {create_db_command}")
         subprocess.run(create_db_command, shell=True, check=True)
     except Exception:
+        log.debug(f"Execute command failed, command: {create_db_command}", exc_info=True)
         raise DBAlreadyExists(f"Database '{db_name}' already exists")
 
 def download_and_extract_sql(url, story_name):

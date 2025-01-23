@@ -1,4 +1,3 @@
-
 /**
  * 渲染测试历史记录到表格
  * @param {Array} history - 测试历史记录数据
@@ -15,8 +14,8 @@ function renderTestHistory(history) {
                 <td>${test.story_name}</td>
                 <td>${test.model_group_name || '-'}</td>
                 <td>${test.total_cases}</td>
-                <td>${test.time_taken || '-'}</td>
-                <td>${test.created_at}</td>
+                <td>${test.time_taken ? test.time_taken.toFixed(1) : '-'}</td>
+                <td>${new Date(test.created_at).toLocaleString('zh-CN', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Shanghai' })}</td>
                 <td>${test.at_cloud_url ? `<a href="${test.at_cloud_url}" target="_blank">AskTable</a>` : '-'}</td>
                 <td>${test.feishu_doc_url ? `<a href="${test.feishu_doc_url}" target="_blank">Feishu Doc</a>` : '-'}</td>
             </tr>

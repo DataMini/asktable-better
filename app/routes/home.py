@@ -5,7 +5,7 @@ from app.runner.main import run_test
 import os
 import yaml
 import uuid
-from app import config
+from app import config, log
 from app.utils.task_logger import LogReader
 
 router = APIRouter()
@@ -13,29 +13,31 @@ router = APIRouter()
 
 @router.get("/stories")
 def get_stories():
-    """获取所有故事及其 main.yaml 内容"""
+    """Get all stories and their main.yaml content"""
     stories = []
     for story_name in os.listdir(config.atb_stories_dir):
         story_path = os.path.join(config.atb_stories_dir, story_name, "main.yaml")
         if os.path.isfile(story_path):
             with open(story_path, "r", encoding="utf-8") as f:
                 yaml_content = yaml.safe_load(f)
+                # Remove sensitive information
+                if yaml_content and 'data' in yaml_content and 'access_config' in yaml_content['data']:
+                    del yaml_content['data']['access_config']
             stories.append({"name": story_name, "content": yaml_content})
     return {"stories": stories}
 
 
 @router.get("/test-report")
 def get_report():
-    """获取测试报告"""
+    """Get test report"""
     return {"report": get_test_report()}
 
 
 @router.get("/test-history")
 def get_history(limit: int = 20):
-    """获取最近的测试历史"""
+    """Get recent test history"""
     results = get_test_results()
-    sorted_results = sorted(results, key=lambda x: x.created_at, reverse=True)
-    return {"history": [r.__dict__ for r in sorted_results[:limit]]}
+    return {"history": [r.__dict__ for r in results[:limit]]}
 
 
 @router.post("/run-test")
@@ -44,10 +46,12 @@ async def run_test_endpoint(
     background_tasks: BackgroundTasks = BackgroundTasks(),
 ):
     """
-    启动测试的 API
+    API to start a test
     """
+    log.info(f"Run test request, force_recreate_db: {request.force_recreate_db}")
+    log.debug(f"Run test request, request: {request}")
     try:
-        # 添加测试任务到后台
+        # add test task to background
         task_id = str(uuid.uuid4())
         background_tasks.add_task(
             run_test,
@@ -71,7 +75,7 @@ async def run_test_endpoint(
 @router.get("/logs/{task_id}")
 async def get_logs(task_id: str, last_read_id: int = 0):
     """
-    获取指定任务 ID 的新增日志。
+    Get new logs for a specified task ID.
     """
     try:
         log_reader = LogReader(task_id)

@@ -1,15 +1,51 @@
 /* 设置主题颜色 */
+
 :root {
-    --bs-primary: #1f2a4c; /* 主按钮颜色 */
+    --primary-color: #0C101D; /* 主要背景色或强调色 */
+    --secondary-color: #497263; /* 次要背景色或按钮色 */
+    --accent-color: #8AD8BC; /* 强调色，用于按钮、链接等 */
 }
+
 
 /* 覆盖按钮默认颜色 */
 .btn-primary {
-    background-color: #1f2a4c !important;
-    border-color: #1f2a4c !important;
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: white;
 }
 
 .btn-primary:hover {
-    background-color: #16203a !important;
-    border-color: #16203a !important;
+    background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
+}
+
+.table-dark {
+    background-color: var(--secondary-color);
+    color: white;
+}
+
+.card {
+    border: 1px solid var(--accent-color);
+}
+
+a {
+    color: var(--accent-color);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+
+.modal-content {
+    border: 1px solid var(--accent-color);
+}
+
+.modal-title, .modal-body, .modal-footer {
+    color: var(--primary-color);
+}
+
+a, .btn {
+    transition: background-color 0.3s ease, color 0.3s ease;
 }

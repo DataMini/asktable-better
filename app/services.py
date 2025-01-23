@@ -22,7 +22,7 @@ def save_result_to_db(
     invalid_cases = len(results[TestStatus.INVALID.value])
     mistake_cases = len(results[TestStatus.MISTAKE.value])
 
-    # 保存测试结果
+    # save test result
     with SessionManager() as db:
         test_result = TestResult(
             at_api_base_url=at_api_base_url,
@@ -46,15 +46,15 @@ def save_result_to_db(
     return {'success': success_cases, 'crash': crash_cases, 'invalid': invalid_cases, 'mistake': mistake_cases}
 
 def get_test_results() -> list[TestResult]:
-    # 获取测试结果
+    # get test results, sorted by created_at in descending order
     with SessionManager() as db:
-        return db.query(TestResult).all()
+        return db.query(TestResult).order_by(TestResult.created_at.desc()).all()
 
 
 def get_test_report() -> dict:
-    # 获取测试报告，包括得分和时间
+    # get test report, including score and time
     with SessionManager() as db:
-        # 查询所有 story-model 的最新测试结果
+        # query the latest test result for each story-model
         subquery = db.query(
             TestResult.story_name,
             TestResult.story_name_cn,
@@ -80,7 +80,7 @@ def get_test_report() -> dict:
             (TestResult.created_at == subquery.c.latest_date)
         ).all()
 
-        # 构建报告
+        # build report
         report = {}
         for story_name, story_name_cn, model_name, total_cases, success_cases, created_at in results:
             score = success_cases / total_cases if total_cases else 0

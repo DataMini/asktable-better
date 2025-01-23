@@ -5,8 +5,10 @@ services:
       context: .
       dockerfile: docker/Dockerfile
     environment:
+      DEBUG: True
       DATABASE_TYPE: sqlite
     ports:
       - "8000:8000"
     volumes:
       - ./stories:/stories
+      - ./at-better-data:/at-better

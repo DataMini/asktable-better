@@ -33,3 +33,18 @@ jobs:
         platforms: linux/amd64 # ,linux/arm64
         cache-from: type=gha # 启用 GitHub Actions 缓存，适用于跨工作流缓存
         cache-to: type=gha,mode=max # 启用缓存并优化构建
+
+    - name: Execute deployment script  # 只更新、重启，不提供 docker-compose.yaml 文件
+      uses: appleboy/ssh-action@v0.1.10
+      with:
+        host: ${{ secrets.SERVER_HOST_SH4 }}
+        username: ${{ secrets.SERVER_USER }}
+        password: ${{ secrets.SERVER_PASSWORD }}
+        port: 22
+        script: |
+          # 进入部署目录
+          cd /root/sh4/at-better/
+          # 拉取最新镜像
+          docker-compose pull && docker-compose down
+          # 启动容器
+          docker-compose up -d

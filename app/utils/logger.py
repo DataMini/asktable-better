@@ -1,6 +1,6 @@
 import logging
 import sys
-
+import os
 
 formatter = logging.Formatter(
     "%(levelname)s: %(filename)s:%(lineno)d %(message)s",
@@ -10,7 +10,7 @@ formatter = logging.Formatter(
 
 def create_logger(name):
     logger = logging.getLogger(name)
-    logger.setLevel(logging.INFO)
+    logger.setLevel(logging.DEBUG if os.getenv('DEBUG') else logging.INFO)
     logger.propagate = (
         False  # Prevent the log messages from being duplicated in the python console
     )
@@ -21,5 +21,4 @@ def create_logger(name):
 
 
 log = create_logger("server")
-
 
