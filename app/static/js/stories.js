@@ -13,10 +13,9 @@ async function loadStories() {
             <div class="col">
                 <div class="card h-100 shadow-sm" style="cursor: pointer" onclick="openStoryWindow('${name}', '${encodeURIComponent(JSON.stringify(content))}')">
                     <div class="card-body">
-                        <h5 class="card-title">${nameCn}</h5>
-                        <p>ID:<strong> ${name}</strong></p>
-                        <p>Case:<strong> ${caseCount}</strong></p>
-                        <button class="btn btn-primary" onclick="event.stopPropagation(); openRunTestModal('${name}')">Run Test</button>
+                        <h6 class="card-title">${nameCn}（${name}）</h6>
+                        <p>用例:<strong> ${caseCount} 个</strong></p>
+                        <button class="btn btn-primary" onclick="event.stopPropagation(); openRunTestModal('${name}')">开始测试</button>
                     </div>
                 </div>
             </div>

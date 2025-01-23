@@ -16,6 +16,11 @@ def save_result(
         time_taken: float,
         task_id: str
     ) -> dict:
+
+    # rename model_group 'default' to 'asktable' for compatibility
+    if curr_model_group == 'default':
+        curr_model_group = 'asktable'
+
     # 生成Markdown报告
     md_file = save_result_to_md(
         results, 
