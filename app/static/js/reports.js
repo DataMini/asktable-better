@@ -14,7 +14,7 @@ async function loadTestReport() {
         }
     }
     const sortedModels = Array.from(allModels).sort();
-    headerRow.innerHTML = `<th>Story</th>` + sortedModels.map(m => `<th>${m}</th>`).join('');
+    headerRow.innerHTML = `<th>测试集</th>` + sortedModels.map(m => `<th>${m}</th>`).join('');
 
     for (const [story, models] of Object.entries(report)) {
         const row = [`<td>${story}</td>`];
