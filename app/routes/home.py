@@ -5,6 +5,7 @@ from app.runner.main import run_test
 import os
 import yaml
 import uuid
+from app import config
 from app.utils.task_logger import LogReader
 
 router = APIRouter()
