@@ -1,15 +1,44 @@
-# at-better-cli
-Make Asktable Better
+# Make AskTable Better
+
+[English](./README_EN.md)
+
+**让 AskTable 更出色**
+
+`asktable-better` 是一款轻量且强大的工具，旨在简化 AskTable 的测试流程，方便用户快速验证AskTable 是否能满足自己的业务场景。它提供了一个简洁的用户界面，用于管理和执行测试集、查看日志以及分析测试报告。
+
+---
+
+## 功能
+
+### 1. 查看测试集  
+在主页轻松浏览可用的测试集。  
+![主页](./docs/home_page.png)
+
+### 2. 执行测试  
+选择一个测试集，点击即可开始测试。  
+![创建测试](./docs/create_test.png)  
+实时监控进度并查看测试日志。  
+![查看测试日志](./docs/view_test_log.png)
+
+### 3. 分析测试报告  
+查看详细的测试历史记录和报告。  
+![查看测试历史](./docs/view_test_history.png)
+
+也可以跳转到 AskTable 实时查看回复内容与效果。
+![在 AskTable 查看](./docs/view_on_asktable.png)
+---
 
 ## 快速使用
 
-1. 创建 `docker-compose.yml` 文件
+按照以下步骤快速设置并开始使用 `at-better-cli`。
+
+### 步骤 1：创建 `docker-compose.yml` 文件  
 
 ```yaml
 version: "3.8"
 services:
   at-better-web:
-    image: at-better-web
+    image: registry-vpc.cn-shanghai.aliyuncs.com/datamini/asktable-better
     ports:
       - "8000:8000"
     volumes:
@@ -17,23 +46,26 @@ services:
       - ./at-better-data:/at-better
 ```
 
-2. 将测试用例保存到目录 `stories` 中
+### 步骤 2：添加测试用例  
+将您的测试用例保存到 `stories` 目录中。详细指南请参考 [测试用例编写指南](./docs/STORY_README.md)。
 
-请参考 [测试用例编写指南](./STORY_README.md)
+### 步骤 3：启动服务  
 
-3. 启动服务
+运行以下命令以启动服务：
 
 ```bash
 docker-compose up -d
 ```
 
-3. 访问 `http://localhost:8000` 即可看到界面
+服务启动后，在浏览器中访问 `http://localhost:8000` 即可使用。
+
+---
 
 ## 高级功能
 
-1. 使用 MySQL 作为数据库
+### 1. 使用 MySQL 作为数据库  
 
-在 `docker-compose.yml` 文件中，增加如下环境变量
+如果希望使用 MySQL 作为数据库，可以在 `docker-compose.yml` 文件中添加以下环境变量：
 
 ```yaml
 environment:
@@ -45,9 +77,9 @@ environment:
   MYSQL_PASSWORD: test
 ```
 
-2. 将测试结果保存到飞书
+### 2. 将测试结果保存到飞书  
 
-在 `docker-compose.yml` 文件中，增加如下环境变量
+如果需要将测试结果保存到飞书，请在 `docker-compose.yml` 文件中添加以下环境变量：
 
 ```yaml
 environment:
@@ -58,3 +90,17 @@ environment:
   FS_FILE_EXCHANGE_FOLDER_TOKEN: xxxxx
   FS_WIKI_URL_PREFIX: https://xxx.feishu.cn/wiki/
 ```
+
+---
+
+## 贡献
+
+我们欢迎社区贡献！如果您遇到任何问题或有改进建议，请随时提交 issue 或创建 pull request。
+
+---
+
+## 许可证
+
+本项目基于 [MIT 许可证](./LICENSE) 开源。  
+
+让我们一起让 AskTable 更加出色！🚀
