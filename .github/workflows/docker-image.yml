@@ -1,0 +1,35 @@
+name: AskTable-Better
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v3
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+
+    - name: Login to Aliyun Docker Registry
+      run: echo ${{ secrets.ALIYUN_DOCKER_REGISTRY_PASSWORD }} | docker login --username=${{ secrets.ALIYUN_DOCKER_REGISTRY_USER }} --password-stdin registry.cn-shanghai.aliyuncs.com
+
+    - name: Build, tag and push Docker image
+      uses: docker/build-push-action@v5.0.0
+      with:
+        context: .
+        file: docker/Dockerfile
+        push: true
+        tags: |
+          registry.cn-shanghai.aliyuncs.com/datamini/asktable-better:latest
+        platforms: linux/amd64 # ,linux/arm64
+        cache-from: type=gha # 启用 GitHub Actions 缓存，适用于跨工作流缓存
+        cache-to: type=gha,mode=max # 启用缓存并优化构建
