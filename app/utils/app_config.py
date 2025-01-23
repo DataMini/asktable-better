@@ -46,11 +46,9 @@ class AppConfig(BaseSettings):
     fs_app_secret: str = Field(default="")
     fs_wiki_parent_token: str = Field(default="")
     fs_wiki_id: str = Field(default="")
-    fs_file_upload_folder_token: str = Field(default="")
-    fs_file_import_folder_token: str = Field(default="")
-    fs_wiki_url_prefix: str = Field(default="https://datamini.feishu.cn/wiki/")
+    fs_file_exchange_folder_token: str = Field(default="")  # 示例：EaSffN1MqlXhxldOoR2cJdmAnjf
+    fs_wiki_url_prefix: str = Field(default="")  # 示例：https://datamini.feishu.cn/wiki/
     
-
 
     class Config:
         env_file = None

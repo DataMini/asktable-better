@@ -31,7 +31,7 @@ def upload_file(file_path: str) -> str:
         .request_body(UploadAllFileRequestBody.builder()
             .file_name(file_name)
             .parent_type("explorer") 
-            .parent_node(config.fs_file_upload_folder_token)
+            .parent_node(config.fs_file_exchange_folder_token)
             .size(size)
             .file(file)
             .build()) \
@@ -55,7 +55,7 @@ def create_import_task(file_token: str) -> str:
             .type("docx")
             .point(ImportTaskMountPoint.builder()
                 .mount_type(1)
-                .mount_key(config.fs_file_import_folder_token)
+                .mount_key(config.fs_file_exchange_folder_token)
                 .build())
             .build()) \
         .build()
