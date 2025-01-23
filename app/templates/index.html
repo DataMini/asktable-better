@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>At-Better Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/css/custom.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <div class="container my-4">
+        <h1 class="text-center mb-4">Make AskTable Better!</h1>
+
+        <!-- Story Panels -->
+        <h2>Stories</h2>
+        <div id="story-panels" class="row row-cols-1 row-cols-md-3 g-4"></div>
+
+        <!-- Test Report -->
+        <h2 class="mt-5">Test Report</h2>
+        <div class="table-responsive">
+            <table class="table table-striped table-hover align-middle">
+                <thead class="table-dark">
+                    <tr id="test-report-header"></tr>
+                </thead>
+                <tbody id="test-report-body"></tbody>
+            </table>
+        </div>
+
+        <!-- Test History -->
+        <h2 class="mt-5">Recent Test History</h2>
+        <div class="table-responsive">
+            <table class="table table-striped table-hover align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Story</th>
+                        <th>Model</th>
+                        <th>Total Cases</th>
+                        <th>Time Taken (s)</th>
+                        <th>Created At</th>
+                        <th>AskTable URL</th>
+                        <th>Feishu Doc URL</th>
+                    </tr>
+                </thead>
+                <tbody id="test-history-body"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- 模态框 -->
+    <div class="modal fade" id="storyModal" tabindex="-1" aria-labelledby="storyModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="storyModalLabel">Story Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <pre id="story-content"></pre>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Run Test Modal -->
+    <div class="modal fade" id="runTestModal" tabindex="-1" aria-labelledby="runTestModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="runTestModalLabel">Run Test</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="runTestForm">
+                        <!-- Hidden Field for Story Name -->
+                        <input type="hidden" id="storyNameInput" name="story_name">
+                        
+                        <div class="mb-3">
+                            <label for="apiBaseUrlInput" class="form-label">API Base URL *</label>
+                            <input type="text" class="form-control" id="apiBaseUrlInput" name="at_api_base_url" value="https://api.asktable.com/v1">
+                        </div>
+                        <div class="mb-3">
+                            <label for="apiKeyInput" class="form-label">API Key *</label>
+                            <input type="text" class="form-control" id="apiKeyInput" name="at_api_key" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="modelGroupInput" class="form-label">Model Group</label>
+                            <input type="text" class="form-control" id="modelGroupInput" name="model_group", value="default">
+                        </div>
+                        <div class="mb-3">
+                            <label for="caseNameInput" class="form-label">Case Name</label>
+                            <input type="text" class="form-control" id="caseNameInput" name="case_name">
+                        </div>
+                        <div class="mb-3">
+                            <label for="worksInput" class="form-label">Number of Works</label>
+                            <input type="number" class="form-control" id="worksInput" name="works" value="2" min="1">
+                        </div>
+                        <div class="mb-3">
+                            <label for="cloudUrlInput" class="form-label">AskTable Cloud URL</label>
+                            <input type="text" class="form-control" id="cloudUrlInput" name="at_cloud_url" value="https://cloud.asktable.com">
+                        </div>
+                        <div class="mb-3">
+                            <label for="lfTagInput" class="form-label">Trace URL Prefix</label>
+                            <input type="text" class="form-control" id="lfTagInput" name="at_trace_url_prefix" value="">
+                        </div>
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox" id="forceRecreateDbInput" name="force_recreate_db">
+                            <label class="form-check-label" for="forceRecreateDbInput">Force Recreate Database</label>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="submitRunTest()">Run Test</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 脚本 -->
+    <script src="/static/js/modals.js"></script>
+    <script src="/static/js/logs.js"></script>
+    <script src="/static/js/stories.js"></script>
+    <script src="/static/js/reports.js"></script>
+    <script src="/static/js/results.js"></script>
+    <script src="/static/js/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

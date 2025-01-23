@@ -1,0 +1,15 @@
+/* 设置主题颜色 */
+:root {
+    --bs-primary: #1f2a4c; /* 主按钮颜色 */
+}
+
+/* 覆盖按钮默认颜色 */
+.btn-primary {
+    background-color: #1f2a4c !important;
+    border-color: #1f2a4c !important;
+}
+
+.btn-primary:hover {
+    background-color: #16203a !important;
+    border-color: #16203a !important;
+}
