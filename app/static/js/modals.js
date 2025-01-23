@@ -54,12 +54,7 @@ async function submitRunTest() {
 
         // 弹出日志窗口
         openLogWindow(task_id);
-
-        // 刷新页面
-        setTimeout(() => {
-            location.reload();
-        }, 1000);
-
+        
     } catch (error) {
         console.error(error);
         alert("Failed to start the test. Check the console for details.");
