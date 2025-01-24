@@ -102,9 +102,4 @@ environment:
 我们欢迎社区贡献！如果您遇到任何问题或有改进建议，请随时提交 issue 或创建 pull request。
 
 ---
-
-## 许可证
-
-本项目基于 [MIT 许可证](./LICENSE) 开源。  
-
 让我们一起让 AskTable 更加出色！🚀
