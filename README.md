@@ -69,7 +69,7 @@ docker-compose up -d
 
 ### 1. 使用 MySQL 作为数据库  
 
-如果希望使用 MySQL 作为数据库，可以在 `docker-compose.yml` 文件中添加以下环境变量：
+asktable-better 默认使用 sqlite 存储测试日志与结果数据，如果希望使用 MySQL，可以在 `docker-compose.yml` 文件中添加以下环境变量：
 
 ```yaml
 environment:
