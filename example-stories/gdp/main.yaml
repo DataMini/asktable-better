@@ -1,0 +1,30 @@
+data:
+  name_cn: GDP
+  bot_name_cn: GDP数据查询小助手
+  local_file: ./2019GDP数据.xlsx
+cases:
+  - name: case_1
+    type: chat
+    params:
+      question: 江苏GDP多少
+
+  - name: case_2
+    type: chat
+    params:
+      question: 广东和江苏的GDP差距多少
+
+  - name: case_3
+    type: chat
+    params:
+      question: 给出广东、江苏、浙江三个省份GDP及电信业总收入的柱状图
+
+  - name: case_4
+    type: chat
+    params:
+      question: 给出广东、江苏、浙江三个省份电信业总收入占各省份GDP的比例的柱状图分析
+
+  - name: case_5
+    type: chat
+    params:
+      question: 给出所有省份移动网络基站数量占各省份GDP的比例的柱状图分析
+
