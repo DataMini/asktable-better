@@ -1,0 +1,25 @@
+version: "3.8"
+services:
+  at-better-web:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    environment:
+      DEBUG: True
+      DATABASE_TYPE: sqlite
+      # MYSQL_HOST: 10.10.10.10
+      # MYSQL_PORT: 3306
+      # MYSQL_DB: at_better
+      # MYSQL_USER: at_better
+      # MYSQL_PASSWORD: at_better
+      FS_APP_ID: cli_xxxxxxxxxxxxxx   # 飞书应用ID
+      FS_APP_SECRET: xxxxxxxxxxxxxxx   # 飞书应用密钥
+      FS_FILE_EXCHANGE_FOLDER_TOKEN: xxxxxxxxxxxxxxx   # 飞书文件上传目录Token
+      FS_WIKI_PARENT_TOKEN: xxxxxxxxxxxxxxx   # 飞书知识库父目录Token
+      FS_WIKI_ID: xxxxxxxxxxxxxxx   # 飞书知识库ID，根据需要调整
+      FS_WIKI_URL_PREFIX: https://xxxxx.feishu.cn/wiki/
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./stories:/stories
+      - ./at-better-data:/at-better

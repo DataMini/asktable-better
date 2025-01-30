@@ -87,12 +87,13 @@ environment:
 
 ```yaml
 environment:
-  FS_APP_ID: xxx
-  FS_APP_SECRET: xxx
-  FS_WIKI_PARENT_TOKEN: xxx
-  FS_WIKI_ID: xxx
-  FS_FILE_EXCHANGE_FOLDER_TOKEN: xxxxx
-  FS_WIKI_URL_PREFIX: https://xxx.feishu.cn/wiki/
+  FS_APP_ID: xxx    # 飞书应用ID
+  FS_APP_SECRET: xxx    # 飞书应用密钥
+  FS_WIKI_PARENT_TOKEN: xxx    # 飞书知识库父目录Token
+  FS_WIKI_ID: xxx    # 飞书知识库ID
+  FS_FILE_EXCHANGE_FOLDER_TOKEN: xxxxx    # 飞书文件上传的临时目录Token
+  FS_WIKI_URL_PREFIX: https://xxx.feishu.cn/wiki/    # 飞书知识库URL前缀
+
 ```
 
 ---
@@ -100,6 +101,12 @@ environment:
 ## 贡献
 
 我们欢迎社区贡献！如果您遇到任何问题或有改进建议，请随时提交 issue 或创建 pull request。
+
+
+## 本地开发
+1. 运行 `cp docker-compose-template.yml docker-compose.yml` 复制模板文件
+2. 修改 `docker-compose.yml` 文件中的环境变量
+3. 运行 `docker-compose up --build` 使用本地代码启动服务，然后访问 `http://localhost:8000` 即可使用。
 
 ---
 让我们一起让 AskTable 更加出色！🚀
