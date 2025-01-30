@@ -123,6 +123,7 @@ def move_file_to_wiki(file_token: str) -> str:
     # handle error response
     if not response.success():
         raise SaveToFeishuError(f"move file to wiki failed, resp: \n{json.dumps(json.loads(response.raw.content), indent=4, ensure_ascii=False)}")
+    log.debug(f"move file to wiki success, resp: \n{json.dumps(json.loads(response.raw.content), indent=4, ensure_ascii=False)}")
     wiki_token = response.data.wiki_token
     return wiki_token
 
