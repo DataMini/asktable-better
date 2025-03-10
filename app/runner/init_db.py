@@ -91,7 +91,7 @@ def download_and_extract_sql(url, story_name):
     response = requests.get(url)
     if response.status_code != 200:
         raise RuntimeError(f"Failed to download SQL files from {url} (status: {response.status_code})")
-    with open(tar_file, "wb") as f:
+    with open(tar_file, "wb", encoding='utf-8') as f:
         f.write(response.content)
     log.info(f"Downloaded SQL files to {tar_file}")
     subprocess.run(["tar", "-xzf", tar_file, "-C", sql_dir], check=True)

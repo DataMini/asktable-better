@@ -33,7 +33,7 @@ def run_test(
 
     _begin_time = time.time()
 
-    with open(join(config.atb_stories_dir, story_name, "main.yaml"), 'r') as f:
+    with open(join(config.atb_stories_dir, story_name, "main.yaml"), 'r', encoding='utf-8') as f:
         story = yaml.safe_load(f)
 
     if case_name:
