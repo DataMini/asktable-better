@@ -31,6 +31,6 @@ app.mount("/static", StaticFiles(directory="app/static"), name="static")
 @app.get("/", response_class=HTMLResponse)
 async def index_page():
     """加载首页模板"""
-    with open("app/templates/index.html", "r") as f:
+    with open("app/templates/index.html", "r", encoding='utf-8') as f:
         return f.read()
     

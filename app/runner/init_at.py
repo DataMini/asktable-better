@@ -39,7 +39,7 @@ def create_or_get_datasource(at: Asktable, story_name_cn, access_config: dict=No
             log.info(f"Deleted existing datasource '{ds_name}'")
 
     if local_file:
-        with open(local_file, 'rb') as f:
+        with open(local_file, 'rb', encoding='utf-8') as f:
             ds = at.datasources.create_from_file(
                 name=ds_name,
                 engine='excel',
