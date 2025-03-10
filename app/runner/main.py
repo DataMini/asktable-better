@@ -85,20 +85,19 @@ def run_test(
     )
     
     time_taken = time.time() - _begin_time
-
+    at_project_url = f"{at_cloud_url}/p/{at.auth.me().get('project_id')}/data/data-source"
     result_stat = save_result(
         results, 
         story_name,
         story_name_cn,
         at_api_base_url,
-        at_cloud_url,
+        at_project_url,
         at.auth.me().get('project_id'),
         at_trace_url_prefix,
         curr_model_group,
         time_taken,
         task_id
     )
-    at_project_url = f"{at_cloud_url}/p/{at.auth.me().get('project_id')}/data/data-source"
     log.info(f"Step 3: Tests completed! Total time taken: {time_taken:.1f}s, {result_stat} in {at_project_url}")
 
     if log_handler:
