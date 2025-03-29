@@ -75,6 +75,11 @@ def run_test(
         init_at.create_knowledge(at, story['business_knowledge'])
     log.info("Step 2: AskTable ready!")
 
+    #TStep 2.2: select tables, need to check SDK or api?
+    meta = init_at.create_metadata(at, datasource)
+    log.info("Step 2.2: Metadata ready")
+
+    
     # Step 3: Run Tests
     results = run_story(
         at=at,

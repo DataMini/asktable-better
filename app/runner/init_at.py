@@ -26,6 +26,15 @@ def configure_model(api_base_url, api_key, model_group=None) -> tuple[Asktable, 
         log.info(f"Using model group '{model_group}'")
     return at, model_group
 
+
+def create_metadata(at: Asktable, datasource):
+    datasource_id = datasource.id
+    meta = at.datasources.meta.create(
+        datasource_id=datasource_id,
+        name="metadata",
+    )
+    return meta
+
 def create_or_get_datasource(at: Asktable, story_name_cn, access_config: dict=None, local_file: str=None, force_recreate_db=False):
     ds_name = f"{story_name_cn}数据"
     datasources = at.datasources.list(name=ds_name)
