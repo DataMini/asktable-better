@@ -75,12 +75,11 @@ def run_test(
         init_at.create_knowledge(at, story['business_knowledge'])
     log.info("Step 2: AskTable ready!")
 
-    #TStep 2.2: select tables, need to check SDK or api?
-    meta = init_at.create_metadata(at, datasource)
-    log.info("Step 2.2: Metadata ready")
 
     
-    # Step 3: Run Tests
+    # Step 3: Run Tests, utilizing retrying machenism
+    
+        
     results = run_story(
         at=at,
         bot_name=bot_name_cn,
@@ -88,6 +87,8 @@ def run_test(
         cases=story['cases'],
         works_num=works_num
     )
+        
+        
     
     time_taken = time.time() - _begin_time
     at_project_url = f"{at_cloud_url}/p/{at.auth.me().get('project_id')}/data/data-source"

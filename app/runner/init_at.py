@@ -27,13 +27,7 @@ def configure_model(api_base_url, api_key, model_group=None) -> tuple[Asktable, 
     return at, model_group
 
 
-def create_metadata(at: Asktable, datasource):
-    datasource_id = datasource.id
-    meta = at.datasources.meta.create(
-        datasource_id=datasource_id,
-        name="metadata",
-    )
-    return meta
+
 
 def create_or_get_datasource(at: Asktable, story_name_cn, access_config: dict=None, local_file: str=None, force_recreate_db=False):
     ds_name = f"{story_name_cn}数据"
@@ -64,6 +58,10 @@ def create_or_get_datasource(at: Asktable, story_name_cn, access_config: dict=No
     else:
         raise ValueError("No datasource configuration provided")    
     log.info(f"Created datasource '{ds_name}'")
+    _ = at.datasources.meta.create(
+        datasource_id=ds.id,
+        name="metadata",
+    )
     return ds
 
 def create_glossary_item(at: Asktable, item):
@@ -93,10 +91,8 @@ def create_knowledge(at: Asktable, knowledge):
         try:
             create_glossary_item(at, item)
             log.info(f"Created glossary '{item['name']}'")
-        except asktable.APIError as e:
-            if e.status_code == 409 and "Integrity Error" in str(e):
-                delete_glossary_item(at, item)
-                create_glossary_item(at, item)
-                log.info(f"Recreated glossary '{item['name']}'")
-            else:
-                raise e
+        except asktable.ConflictError as e:
+            delete_glossary_item(at, item)
+            create_glossary_item(at, item)
+            log.info(f"Recreated glossary '{item['name']}'")
+        
