@@ -72,12 +72,12 @@ def run_test(
         force_recreate_db=force_recreate_db
     )
     if 'business_knowledge' in story:
-        init_at.create_knowledge(at, story['business_knowledge'])
+        init_at.create_knowledge(at, story['business_knowledge'], datasource.id)
     log.info("Step 2: AskTable ready!")
 
 
     
-    # Step 3: Run Tests, utilizing retrying machenism
+    
     
         
     results = run_story(

@@ -77,6 +77,26 @@ def create_glossary_item(at: Asktable, item):
         ]
     )
 
+
+def create_training_example(at: Asktable, item, datasource_id):
+    training_example = {
+        "question": item["question"],
+        "sql": item["sql"]
+    }
+    at.trainings.create(
+        datasource_id=datasource_id,
+        body=[
+            training_example
+        ]
+    )
+
+def delete_training_example(at: Asktable, item, datasource_id):
+    items = at.trainings.list(extra_query=item["question"], datasource_id=datasource_id)
+    if items.items:
+        at.trainings.delete(items.items[0].id)
+    else:
+        log.warning(f"Training example '{item['question']}' not found")
+
 def delete_glossary_item(at: Asktable, item):
     items = at.business_glossary.list(term=item['name'])    
     if items.items:
@@ -85,14 +105,32 @@ def delete_glossary_item(at: Asktable, item):
         log.warning(f"Glossary '{item['name']}' not found")
 
 
-def create_knowledge(at: Asktable, knowledge):
+def create_knowledge(at: Asktable, knowledge, datasource_id):
     glossary = knowledge.get('glossary', [])
     for item in glossary:
         try:
             create_glossary_item(at, item)
             log.info(f"Created glossary '{item['name']}'")
+
+            
         except asktable.ConflictError as e:
             delete_glossary_item(at, item)
             create_glossary_item(at, item)
             log.info(f"Recreated glossary '{item['name']}'")
-        
+
+            
+    
+    trainings = knowledge.get('trainings', [])
+    log.info(f"Creating {len(trainings)} training examples")
+    for item in trainings:
+        try:
+            create_training_example(at, item, datasource_id)
+            log.info(f"Created training example '{item['question']}'")
+        except asktable.ConflictError as e:
+            delete_training_example(at, item, datasource_id)
+            create_training_example(at, item, datasource_id)
+            log.info(f"Recreated training example '{item['question']}'")
+
+
+
+
