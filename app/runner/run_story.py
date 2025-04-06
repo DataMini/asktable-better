@@ -10,7 +10,15 @@ from app.models import TestStatus
 
 def run_case(at: Asktable, bot_id: str, case: dict):
     chat = at.chats.create(bot_id=bot_id)
+    try_count = 0
     while True:
+        try_count += 1
+        if try_count > 3:
+            log.error(f"Run case {case['name']} failed! try_count > 3")
+            return {
+                "chat_id": chat.id,
+                "trace_id": None,
+            }
         try:
             _begin_time = time.time()
             question = case['params']['question']
